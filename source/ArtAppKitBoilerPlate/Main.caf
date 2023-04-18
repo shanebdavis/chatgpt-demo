@@ -1,0 +1,13 @@
+appColor = #75a89c
+
+&ArtAppKit/Client.init {}
+  title:      "" Code & Optimism ChatGPT App Demo
+  pageStacks: [] id: :home icon: :home
+  &Components/pages
+  &Components/App
+
+  appPalette:
+    primary:        appColor
+    primaryLight:   appColor
+    primaryDark:    appColor
+    toolbarColor:   appColor

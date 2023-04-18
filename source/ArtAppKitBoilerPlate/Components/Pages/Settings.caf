@@ -1,0 +1,40 @@
+import &StandardImport
+
+class Settings extends ViewStateComponent
+  @subscriptions
+    :openAiSettings.apiKey
+    :openAiSettings.model
+    :conversation.history
+
+  render: ->
+    Page
+      @props
+      MenuSectionGroup
+        MenuSection
+          label: "" API Key
+
+          MenuMarkdown
+            text:
+              ""
+                Input your OpenAI API key here. This information is only stored in your local browser and used
+                solely to communicate with OpenAI.
+
+          MenuEditableText
+            icon:       :Key
+            placeHolder: "" API Key
+            value: @apiKey
+            onSave: @models.openAiSettings.setApiKey
+
+        MenuSection
+          label: "" Reset
+
+          MenuButton
+            text: "" Clear conversation history
+            action: if @history.length > 1 then ->
+              @models.conversation.resetState()
+
+          MenuButton
+            text: "" Clear all settings
+            action: ->
+              @models.conversation.resetState()
+              @models.openAiSettings.resetState()

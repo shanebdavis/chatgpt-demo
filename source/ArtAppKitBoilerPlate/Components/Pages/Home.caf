@@ -1,0 +1,27 @@
+import &StandardImport
+
+class Home extends ViewStateComponent
+  @subscriptions
+    :openAiSettings.apiKey
+
+  render: ->
+    Page
+      @props
+      MenuSectionGroup
+        MenuSection
+          label: "" Home
+
+          MenuButton
+            icon:       :chatbubbles
+            if @apiKey.length > 0
+              text:       "" 5 Whys
+              action: -> @models.pageStack.push :FiveWhys
+            else
+              text: "" 5 Whys (set API key in Settings first)
+
+
+          MenuButton
+            icon:       :settings
+            text:       "" Settings
+            action: -> @models.pageStack.push :Settings
+

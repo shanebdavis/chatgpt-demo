@@ -1,0 +1,8 @@
+import &ArtSuite, &ArtRestClient
+
+class OpenAiSettings extends ApplicationState
+  @persistant()
+  @stateFields
+    apiKey: ''
+    model:  :gpt-3.5-turbo
+

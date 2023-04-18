@@ -1,0 +1,30 @@
+{
+  "bugs": "https://github.com/art-suite/art-suite-applications/issues",
+  "dependencies": {
+    "art-app-kit": "^1.4.6",
+    "caffeine-script-runtime": "^1.14.0",
+    "crypto-browserify": "^3.12.0",
+    "neptune-namespaces-runtime": "^3.2.9",
+    "source-map-loader": "^4.0.1",
+    "stream-browserify": "^3.0.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "devDependencies": {
+    "art-build-configurator": "^1.29.3"
+  },
+  "homepage": "https://github.com/art-suite/art-suite-applications",
+  "license": "ISC",
+  "name": "@art-suite/art-app-kit-boilerplate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/art-suite/art-suite-applications.git"
+  },
+  "scripts": {
+    "build": "webpack --progress",
+    "build-assets": "cpf-tool asset-source/icons/*.svg -o assets/icons.cpf --camelCase",
+    "uglify-client": "echo 'uglifyjs Client'\nnpx uglify-js build/Client.js -c --keep-fnames -o build/Client.min.js",
+    "start": "nn -s --watch&\ncafSourceMaps=true webpack serve --hot --progress --open --static public&\nwait",
+    "test": "nn -s; mocha -u tdd"
+  }
+}
