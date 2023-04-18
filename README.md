@@ -1,1 +1,3 @@
-https://platform.openai.com/docs/api-reference
+# ChatGPT Demo
+
+https://shanebdavis.github.io/chatgpt-demo/
