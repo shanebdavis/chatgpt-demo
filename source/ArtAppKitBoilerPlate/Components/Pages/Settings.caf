@@ -10,20 +10,7 @@ class Settings extends ViewStateComponent
     Page
       @props
       MenuSectionGroup
-        MenuSection
-          label: "" API Key
-
-          MenuMarkdown
-            text:
-              ""
-                Input your OpenAI API key here. This information is only stored in your local browser and used
-                solely to communicate with OpenAI.
-
-          MenuEditableText
-            icon:       :Key
-            placeHolder: "" API Key
-            value: @apiKey
-            onSave: @models.openAiSettings.setApiKey
+        ApiKeySettings()
 
         MenuSection
           label: "" Reset

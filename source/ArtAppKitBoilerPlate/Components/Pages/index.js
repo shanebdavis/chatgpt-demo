@@ -4,7 +4,8 @@
 (module.exports = require('./namespace'))
 
 .addModules({
-  FiveWhys: require('./FiveWhys'),
-  Home:     require('./Home'),
-  Settings: require('./Settings')
+  FiveWhys:       require('./FiveWhys'),
+  Home:           require('./Home'),
+  Settings:       require('./Settings'),
+  StandardImport: require('./StandardImport')
 });

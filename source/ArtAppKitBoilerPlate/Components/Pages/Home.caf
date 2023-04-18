@@ -8,20 +8,34 @@ class Home extends ViewStateComponent
     Page
       @props
       MenuSectionGroup
-        MenuSection
-          label: "" Home
+        unless @apiKey
+          MenuSection
+            MenuMarkdown
+              text:
+                """
+                  # Welcome to the ChatGPT App Demo
 
-          MenuButton
-            icon:       :chatbubbles
-            if @apiKey.length > 0
-              text:       "" 5 Whys
-              action: -> @models.pageStack.push :FiveWhys
-            else
-              text: "" 5 Whys (set API key in Settings first)
+                  This app demos creating custom chat experiences using OpenAI's ChatGPT API service.
+                  This is just a demo app. It simply communicates directly with ChatGPT on your behalf.
 
+                  In order to communicate with ChatGPT, this app needs an API key.
 
-          MenuButton
-            icon:       :settings
-            text:       "" Settings
-            action: -> @models.pageStack.push :Settings
+            MenuButton
+              icon: :link
+              text: "" Get your free ChatGPT API key
+              action: ->
+                global.open :https://platform.openai.com/account/api-keys
 
+            ApiKeySettings()
+
+        else
+          MenuSection
+            label: "" Home
+
+            MenuButton
+              icon:       :chatbubbles
+              if @apiKey.length > 0
+                text:       "" 5 Whys
+                action: -> @models.pageStack.push :FiveWhys
+              else
+                text: "" 5 Whys (set API key in Settings first)

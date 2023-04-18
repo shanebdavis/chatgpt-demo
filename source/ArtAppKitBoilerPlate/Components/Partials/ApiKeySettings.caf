@@ -1,0 +1,21 @@
+import &StandardImport
+
+class ApiKeySettings extends ViewStateComponent
+  @subscriptions
+    :openAiSettings.apiKey
+
+  render: ->
+    MenuSection
+      label: "" API Key
+
+      MenuMarkdown
+        text:
+          ""
+            Input your OpenAI API key below. This information is only stored in your local browser and used
+            solely to communicate with OpenAI.
+
+      MenuEditableText
+        icon:       :Key
+        placeholder: "" enter your API Key here
+        value: @apiKey
+        onSave: @models.openAiSettings.setApiKey

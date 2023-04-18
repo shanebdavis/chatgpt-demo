@@ -19,6 +19,11 @@ package: -> merge
         -o assets/icons.cpf
         --camelCase
 
+    uglify-client:
+      """
+        echo 'uglifyjs Client'
+        npx uglify-js build/Client.js -c --keep-fnames -o build/Client.min.js
+
 webpack:
   # common properties are merged into each target's properties
   common:

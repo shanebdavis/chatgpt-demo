@@ -7,3 +7,4 @@
   App: require('./App')
 });
 require('./Pages');
+require('./Partials');
