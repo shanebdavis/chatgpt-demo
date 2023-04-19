@@ -43,6 +43,13 @@ class Conversation extends ApplicationState
 
     .then ({choices:[{message: {role, content}}]}) ->
       @addToHistory role, content
+    .catch (error) ->
+      log {} error
+      @addToHistory :error, error.responseData?.error?.message ?
+        if error.status == networkFailure
+          "" Your Internet connection appears to be offline.
+        else
+          "" #{error.status}: #{error.message}
 
   sendMessage: (prompt) -> @sendRoleMessage :user prompt
   sendSystemMessage: (prompt) -> @sendRoleMessage :system prompt

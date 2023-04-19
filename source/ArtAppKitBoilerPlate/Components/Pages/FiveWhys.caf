@@ -40,6 +40,7 @@ class FiveWhys extends ViewStateComponent
           userRole = role == :user
           systemRole = role == :system
           assistantRole = role == :assistant
+          errorRole = role == :error
           summary = !userRole && @done && i >= @history.length - 1
           if @done && i == @history.length - 3
             []
@@ -69,13 +70,8 @@ class FiveWhys extends ViewStateComponent
               padding: @gridSize
               textStyle
               color: TextPalette.black.secondary if systemRole
+              color: "red" if errorRole
               mediumItalicText if systemRole
-
-        # TextElement
-        #   text: "" Response:
-        #   :parentWidthChildrenHeight
-        #   padding: @gridSize
-        #   TextStyles.smallBoldText
 
         unless @done then []
           Element
