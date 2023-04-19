@@ -1,0 +1,45 @@
+import &StandardImport
+
+class Home extends ViewStateComponent
+  @subscriptions
+    :openAiSettings.apiKey
+
+  render: ->
+    Page
+      @props
+      MenuSectionGroup
+        MenuSection
+          MenuMarkdown
+            text:
+              """
+                # Welcome to the ChatGPT App Demo
+
+                This is a custom chat experiences using OpenAI's ChatGPT API service.
+
+                > Your API-key, and all the details of your conversations are ONLY sent to OpenAI and nowhere else. Your API-key and current conversation history are stored on your local browser. You can clear all saved data under Settings.
+        unless @apiKey
+          MenuSection
+            MenuMarkdown
+              text:
+                """
+                  In order to communicate with ChatGPT, this app needs an API key.
+
+            MenuButton
+              icon: :link
+              text: "" Get your free ChatGPT API key
+              action: ->
+                global.open :https://platform.openai.com/account/api-keys
+
+            ApiKeySettings()
+
+        else
+          MenuSection
+            label: "" Chat Options
+
+            MenuButton
+              icon:       :chatbubbles
+              if @apiKey.length > 0
+                text:       "" 5 Whys
+                action: -> @models.pageStack.push :FiveWhys
+              else
+                text: "" 5 Whys (set API key in Settings first)

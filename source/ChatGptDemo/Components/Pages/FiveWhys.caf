@@ -1,0 +1,108 @@
+import &StandardImport
+
+textStyle =
+  TextStyles.mediumText
+  leading: 1.5
+
+class FiveWhys extends ViewStateComponent
+  @subscriptions
+    :conversation.history
+    :conversation.done
+
+  render: ->
+    fiveWhysAccomplished = @history.length > 3
+    Page
+      @props
+      MenuSectionGroup MenuSection
+        TextElement
+          :parentWidthChildrenHeight
+          textStyle
+          mediumItalicText
+          color: TextPalette.black.secondary
+          padding: @gridSize
+          text:
+            ""
+              "Five Whys" is an iterative exercise used to explore the cause-and-effect relationships underlying a particular problem.
+              This process is there to help deeping your understanding of your goals and why they matter. It is not intended to
+              explore how to achieve them.
+              The process proceeds by repeating the question "Why?" five times, drilling down deeper into unspoken assumptions.
+              By the time you get to the fifth "why" you usually will have new insights into the problem.
+
+        TextElement
+          :parentWidthChildrenHeight
+          textStyle
+          padding: @gridSize
+          text:
+            ""
+              What is your goal?
+
+        array {role, content}, i in @history skip 1
+          userRole = role == :user
+          systemRole = role == :system
+          assistantRole = role == :assistant
+          errorRole = role == :error
+          summary = !userRole && @done && i >= @history.length - 1
+          if @done && i == @history.length - 3
+            []
+          else Element
+            key: "" #{i}:#{role}:#{content}
+            draw:
+              :clip
+              radius: @gridSize / 4
+              fill: if userRole then TextPalette.black.barely
+              padding:
+                h: 0
+                v: @gridSize / 2
+            :parentWidthChildrenHeight
+            padding:
+              v: @gridSize / 2
+            animators: size:
+              from: h: 0
+            TextElement
+              text:
+                if !summary && assistantRole
+                  if i > 11
+                    "" #{i/2} (bonus): #{} content
+                  else
+                    "" #{i/2} of 5: #{} content
+                else
+                  content
+              padding: @gridSize
+              textStyle
+              color: TextPalette.black.secondary if systemRole
+              color: "red" if errorRole
+              mediumItalicText if systemRole
+
+        unless @done then []
+          Element
+            :parentWidthChildrenHeight
+            margin: bottom: @gridSize
+            draw:
+              padding: @gridSize * .25
+              radius: @gridSize / 3
+              outline: TextPalette.black.tertiary
+              shadow: true
+              {} fill: :white
+            TextInputElement
+              :parentWidthChildrenHeight
+              textStyle
+              key:          :messageInput
+              padding:      @gridSize
+              placeholder:  "" Your answer?
+              on: enter: ({target})->
+                @models.conversation.sendMessage target.value
+                @refs.messageInput.element.value = ""
+                timeout 0 -> @refs.messageInput.element.value = ""
+
+          if fiveWhysAccomplished
+            MenuButton
+              icon:       :check
+              text:       "" Finish and get summary.
+              action:   ->
+                @models.conversation.sendSystemMessage "" I'm done now. Can you please summarize what we talked about?
+                @models.conversation.done = true
+        if @history.length > 1
+          MenuButton
+            icon:       :refreshCircle
+            text:       "" Restart
+            action:   @models.conversation.restart

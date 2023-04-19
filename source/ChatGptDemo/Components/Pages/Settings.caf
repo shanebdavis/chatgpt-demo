@@ -1,0 +1,34 @@
+import &StandardImport
+
+class Settings extends ViewStateComponent
+  @subscriptions
+    :openAiSettings.apiKey
+    :openAiSettings.model
+    :conversation.history
+
+  render: ->
+    Page
+      @props
+      MenuSectionGroup
+        ApiKeySettings()
+
+        MenuSection
+          label: "" Reset
+
+          MenuButton
+            text: "" Clear conversation history
+            action: if @history.length > 1 then ->
+              @models.conversation.resetState()
+
+          MenuButton
+            text: "" Clear API key
+            action: if @apiKey.length > 1 then ->
+              @models.openAiSettings.resetState()
+
+        MenuSection
+          label: "" Full Reset
+          MenuButton
+            text: "" Clear all saved settings and conversation history
+            action: ->
+              @models.conversation.resetState()
+              @models.openAiSettings.resetState()

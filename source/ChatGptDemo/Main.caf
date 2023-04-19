@@ -1,0 +1,24 @@
+import &StandardImport
+appColor = #75a89c
+&Models
+
+&ArtAppKit/Client.init {}
+  title:      "" ChatGPT App Demo
+  pageStacks: []
+    id: :home icon: :home
+    id: :settings icon: :settings
+
+  &Components/pages
+  &Components/App
+
+  appPalette:
+    primary:        appColor
+    primaryLight:   appColor
+    primaryDark:    appColor
+    toolbarColor:   appColor
+
+
+.then ->
+  if models.openAiSettings.firstTime
+    log "" first time!
+    models.pageStack.showStack :settings
